@@ -2,6 +2,7 @@ import { FileText } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import NavLink from "./nav-link";
+import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
   const isLoggedIn = false;
@@ -20,17 +21,20 @@ export default function Header() {
         {isLoggedIn &&<NavLink href="/dashboard">Your Summaries</NavLink>}
       </div>
       <div className="flex lg:justify-end ">
-        {isLoggedIn ? (
+        
+            <Show when="signed-in">
           <div className="flex gap-2 items-center">
             <NavLink href="/upload">Upload a PDF</NavLink>
             <div className="">Pro</div>
-            <Button>User</Button>
+              <UserButton  />
           </div>
-        ) : (
-          <div className="">
-            <NavLink href="/sign-in">Sign In</NavLink>
-          </div>
-        )}
+            </Show>
+       
+          <Show when="signed-out">
+              <NavLink href="/sign-in">Sign In</NavLink>
+            </Show>
+
+       
       </div>
     </nav>
   );
