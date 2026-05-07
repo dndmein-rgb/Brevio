@@ -1,5 +1,5 @@
 import BgGradient from "@/components/common/bg-gradient";
-import UplaodForm from "@/components/upload/upload-form";
+import UploadForm from "@/components/upload/upload-form";
 import UploadHeader from "@/components/upload/upload-header";
 
 export default function Page() {
@@ -9,7 +9,7 @@ export default function Page() {
       <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
        <div className="flex flex-col items-center gap-6 text-center">
         <UploadHeader />
-       <UplaodForm />
+       <UploadForm />
        </div>
       </div>
     </section>

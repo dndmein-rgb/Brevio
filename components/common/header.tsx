@@ -1,40 +1,46 @@
+"use client";
+
 import { FileText } from "lucide-react";
-import Link from "next/link";
-import { Button } from "../ui/button";
 import NavLink from "./nav-link";
-import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import { Show, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
-  const isLoggedIn = false;
   return (
     <nav className="container flex items-center justify-between py-2 lg:px-8 px-2 mx-auto">
+      
       <div className="flex">
-        <NavLink href="/" className="flex items-center gap-1 lg:gap-2 shrink-0">
-          <FileText className="w-5 h-5  lg:w-8 lg:h-8 text-gray-900 hover:rotate-12 transform transition duration-200 ease-in-out" />
+        <NavLink
+          href="/"
+          className="flex items-center gap-1 lg:gap-2 shrink-0"
+        >
+          <FileText className="w-5 h-5 lg:w-8 lg:h-8 text-gray-900 hover:rotate-12 transition duration-200 ease-in-out" />
+          
           <span className="font-extrabold lg:text-xl text-gray-900">
             Brevio
           </span>
         </NavLink>
       </div>
+
       <div className="flex lg:justify-center gap-4 lg:gap-12 lg:items-center">
         <NavLink href="/#pricing">Pricing</NavLink>
-        {isLoggedIn &&<NavLink href="/dashboard">Your Summaries</NavLink>}
+
+        <Show when="signed-in">
+          <NavLink href="/dashboard">Your Summaries</NavLink>
+        </Show>
       </div>
-      <div className="flex lg:justify-end ">
-        
-            <Show when="signed-in">
+
+      <div className="flex lg:justify-end">
+        <Show when="signed-in">
           <div className="flex gap-2 items-center">
             <NavLink href="/upload">Upload a PDF</NavLink>
-            <div className="">Pro</div>
-              <UserButton  />
+            <div>Pro</div>
+            <UserButton />
           </div>
-            </Show>
-       
-          <Show when="signed-out">
-              <NavLink href="/sign-in">Sign In</NavLink>
-            </Show>
+        </Show>
 
-       
+        <Show when="signed-out">
+          <NavLink href="/sign-in">Sign In</NavLink>
+        </Show>
       </div>
     </nav>
   );

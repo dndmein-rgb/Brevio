@@ -1,23 +1,25 @@
+import { auth } from "@clerk/nextjs/server";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 
 const f = createUploadthing();
 
-// Mock function for getting the current user - replace with your actual auth logic (e.g., Clerk, NextAuth)
-const currentUser = async () => ({ id: "fake-user-id" }); 
+
 
 export const ourFileRouter = {
   // Define a route for PDF uploads
   pdfUploader: f({ pdf: { maxFileSize: "32MB" } })
     // Middleware runs on your server before the upload happens
-    .middleware(async ({ req }) => {
-      const user = await currentUser();
+    .middleware(async () => {
+      const { userId } = await auth();
 
-      // If no user is found, throw an error to prevent the upload
-      if (!user) throw new UploadThingError("Unauthorized");
+      console.log("userId:", userId);
 
-      // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      return { userId: user.id };
+      if (!userId) {
+        throw new UploadThingError("You must be logged in to upload files");
+      }
+
+      return { userId };
     })
     .onUploadComplete(async ({ metadata, file }) => {
       // This code runs on your server after the upload is successful
@@ -25,7 +27,11 @@ export const ourFileRouter = {
       console.log("File URL:", file.ufsUrl);
 
       // Return value is sent to the client-side onClientUploadComplete callback
-     return { userId: metadata.userId, file } as any;
+     return {     userId: metadata.userId,
+    fileUrl: file.ufsUrl,
+    fileName: file.name,
+    fileSize: file.size,
+ };
     }),
 } satisfies FileRouter;
 
