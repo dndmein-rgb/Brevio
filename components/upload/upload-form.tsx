@@ -3,8 +3,12 @@ import { useUploadThing } from "@/utils/uploadthing";
 import UploadFormInput from "./upload-from-input";
 import { z } from "zod";
 import { toast } from "sonner";
-import { generatePDFSummary } from "@/actions/upload-actions";
+import {
+  generatePDFSummary,
+  storePdfSummaryAction,
+} from "@/actions/upload-actions";
 import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   file: z
@@ -13,15 +17,13 @@ const schema = z.object({
       (file) => file.size <= 20 * 1024 * 1024,
       "File must be less than 20MB ",
     )
-    .refine(
-      (file) => file.type === "application/pdf",
-      "File must be a PDF",
-    ),
+    .refine((file) => file.type === "application/pdf", "File must be a PDF"),
 });
 
 export default function UploadForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const { startUpload, routeConfig } = useUploadThing("pdfUploader", {
     onClientUploadComplete: () => {
       console.log("uploaded successfully!");
@@ -76,15 +78,32 @@ export default function UploadForm() {
       console.log({ result });
       const { data = null, message = null, success = false } = result || {};
       if (success && data) {
+        let storeResult: any;
         toast.success("✨ Summary generated!", {
           description: "Your PDF has been processed successfully!",
         });
+
+        if (data?.summary) {
+          storeResult = await storePdfSummaryAction({
+            summary: data.summary,
+            fileUrl: resp[0].serverData.fileUrl,
+            title: data.fileName,
+            fileName: file.name,
+          });
+        }
+        toast.success("✨ Summary generated!", {
+          description:
+            "Your PDF has been processed successfully summarized and saved!",
+        });
         formRef.current?.reset();
+        router.push(`/summaries/${storeResult.data.id}`);
       } else {
         toast.error("Failed to generate summary", {
           description: message || "Please try again",
         });
+        formRef.current?.reset();
       }
+
       setIsLoading(false);
     } catch (error) {
       formRef.current?.reset();
@@ -93,6 +112,8 @@ export default function UploadForm() {
       toast.error("An error occurred", {
         description: "Please try again later",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
