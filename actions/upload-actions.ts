@@ -148,7 +148,7 @@ async function savePdfSummary({
         ${title},
         ${fileName}
       )
-      RETURNING id
+      RETURNING id,summary_text
     `;
 
     return {

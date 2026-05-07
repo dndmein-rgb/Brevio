@@ -34,8 +34,8 @@ export default function UploadForm() {
         description: err.message || "Please try again",
       });
     },
-    onUploadBegin: ({ file }) => {
-      console.log("Upload has begun for", file);
+    onUploadBegin: (fileName: string) => {
+      console.log("Upload has begun for", fileName);
     },
   });
 
@@ -78,25 +78,33 @@ export default function UploadForm() {
       console.log({ result });
       const { data = null, message = null, success = false } = result || {};
       if (success && data) {
-        let storeResult: any;
         toast.success("✨ Summary generated!", {
           description: "Your PDF has been processed successfully!",
         });
 
+        let storeResult: any = null;
         if (data?.summary) {
           storeResult = await storePdfSummaryAction({
             summary: data.summary,
             fileUrl: resp[0].serverData.fileUrl,
             title: data.fileName,
             fileName: file.name,
+            userId: data.userId,
           });
+
+          if (storeResult?.success && storeResult?.id) {
+            toast.success("✨ Summary saved!", {
+              description: "Your PDF has been processed and saved!",
+            });
+            formRef.current?.reset();
+            router.push(`/summaries/${storeResult.id}`);
+          } else {
+            toast.warning("Summary generated but not saved", {
+              description: "You can still view your summary",
+            });
+            formRef.current?.reset();
+          }
         }
-        toast.success("✨ Summary generated!", {
-          description:
-            "Your PDF has been processed successfully summarized and saved!",
-        });
-        formRef.current?.reset();
-        router.push(`/summaries/${storeResult.data.id}`);
       } else {
         toast.error("Failed to generate summary", {
           description: message || "Please try again",
