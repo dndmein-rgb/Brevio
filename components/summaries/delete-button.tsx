@@ -15,22 +15,22 @@ import { deleteSummaryAction } from "@/actions/summary-actions";
 import { toast } from "sonner";
 
 interface DeleteButtonProps {
-    summaryId:string
+  summaryId: string;
 }
 
-export default function DeleteButton({summaryId}:DeleteButtonProps) {
-    const [open,setOpen]=useState(false);
-    const [isPending,startTransition]=useTransition();
+export default function DeleteButton({ summaryId }: DeleteButtonProps) {
+  const [open, setOpen] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
-    const handleDelete=async()=>{
-      startTransition(async()=>{
-        const result=  await deleteSummaryAction({summaryId});
-      if(!result.success){
-        toast.error("Failed to delete summary")
+  const handleDelete = async () => {
+    startTransition(async () => {
+      const result = await deleteSummaryAction({ summaryId });
+      if (!result.success) {
+        toast.error("Failed to delete summary");
       }
-        setOpen(false)
-      })
-    }
+      setOpen(false);
+    });
+  };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -52,18 +52,18 @@ export default function DeleteButton({summaryId}:DeleteButtonProps) {
         </DialogHeader>
         <DialogFooter>
           <Button
-          onClick={()=>setOpen(false)}
+            onClick={() => setOpen(false)}
             variant="ghost"
             className="bg-gray-50 border border-gray-200 hover:text-gray-600 hover:bg-gray-100"
           >
             Cancel
           </Button>
           <Button
-          onClick={handleDelete}
+            onClick={handleDelete}
             variant="destructive"
             className="bg-gray-900 hover:bg-gray-600"
           >
-            {isPending ?"Deleting...":"Delete"}
+            {isPending ? "Deleting..." : "Delete"}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -176,12 +176,12 @@ export async function storePdfSummaryAction({
         message: "User not found",
       };
     }
-
+    const cleanTitle = fileName.replace(/\.[^/.]+$/, "");
     const savedSummary = await savePdfSummary({
       userId: authUserId,
       fileUrl,
       summary,
-      title,
+      title:cleanTitle,
       fileName,
     });
 
