@@ -1,4 +1,4 @@
-import { getPriceIdForActive } from '@/lib/user';
+import { getPriceIdForActiveUser } from '@/lib/user';
 import { cn } from '@/lib/utils';
 import { pricingPlans } from '@/utils/constants';
 import { currentUser } from '@clerk/nextjs/server';
@@ -19,7 +19,7 @@ export default async function PlanBadge() {
 
   // 4. Fetch the specific Price ID associated with the user's email
   if (email) {
-    priceId = await getPriceIdForActive(email);
+    priceId = await getPriceIdForActiveUser(email);
   }
 
   // 5. Default state for users without a plan
