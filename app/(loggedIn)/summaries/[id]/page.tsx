@@ -5,6 +5,7 @@ import {SummaryHeader} from "@/components/summaries/summary-header"
 import { FileText } from "lucide-react";
 import SourceInfo from "@/components/summaries/source-info";
 import SummaryViewer from "@/components/summaries/summary-viewer";
+import { MotionDiv } from "@/components/common/motion-wrapper";
 
 export default async function SummaryPage(props: { params: Promise<{ id: string }> }) {
     const params=await props.params;
@@ -26,17 +27,17 @@ export default async function SummaryPage(props: { params: Promise<{ id: string 
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12 lg:py-24 flex flex-col gap-6 sm:gap-8">
       
       {/* Header Section */}
-      <header className="flex flex-col gap-4">
+      <MotionDiv initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{duration:0.5}} className="flex flex-col gap-4">
         <SummaryHeader 
           title={title} 
           createdAt={created_at} 
           readingTime={reading_time} 
         />
         {file_name && <SourceInfo title={title} summaryText={summary_text} createdAt={created_at}  originalFileUrl={original_file_url} fileName={file_name} />}
-      </header>
+      </MotionDiv>
 
       {/* Content Section */}
-<main className="relative flex justify-center">
+<MotionDiv initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{duration:0.5}} className="relative flex justify-center">
   <div className="relative w-full max-w-4xl p-4 sm:p-6 lg:p-8 bg-white/80 backdrop-blur-md rounded-2xl sm:rounded-3xl shadow-xl border border-rose-100/30">
     
     {/* Word Count Badge */}
@@ -50,7 +51,7 @@ export default async function SummaryPage(props: { params: Promise<{ id: string 
       <SummaryViewer summary={summary_text} />
     </div>
   </div>
-</main>
+</MotionDiv>
 
     </div>
   </div>

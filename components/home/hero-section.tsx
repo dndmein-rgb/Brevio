@@ -2,12 +2,28 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import { MotionDiv, MotionH1, MotionH2, MotionSection, MotionSpan } from "../common/motion-wrapper";
+import { containerVariants, itemVariants } from "@/utils/constants";
+
+ const springHover = {
+  scale: 1.05,
+  transition: {
+    type: "spring",
+    stiffness: 300,
+    damping: 10
+  }
+  
+} as const;
+const spanVariants = {
+  visible: springHover, // Maps the hover look to the 'visible' state
+  hidden: { scale: 1 }
+};
 
 export default function HeroSection() {
   return (
-    <section className="relative mx-auto flex flex-col z-0 items-center justify-center py-16 sm:py-20 lg:pb-28 transition-all animate-in lg:px-12 max-w-7xl">
+    <MotionSection variants={containerVariants} initial={'hidden'} animate="visible" className="relative mx-auto flex flex-col z-0 items-center justify-center py-16 sm:py-20 lg:pb-28 transition-all animate-in lg:px-12 max-w-7xl">
       <div className="">
-        <div className="relative  p-px overflow-hidden rounded-full bg-linear-to-r from-rose-200 via-rose-500 to-rose-800 animate-gradient-x group">
+        <MotionDiv variants={itemVariants} className="relative  p-px overflow-hidden rounded-full bg-linear-to-r from-rose-200 via-rose-500 to-rose-800 animate-gradient-x group">
           <Badge
             variant={"secondary"}
             className="h-8 relative px-6 py-2 text-base font-medium bg-white rounded-full group-hover:bg-gray-50 transition-colors duration-200"
@@ -17,15 +33,15 @@ export default function HeroSection() {
               Powered by AI{" "}
             </p>
           </Badge>
-        </div>
+        </MotionDiv>
       </div>
-   <h1 className="text-4xl md:text-6xl font-bold py-6 text-center leading-tight">
+   <MotionH1  variants={itemVariants} className="text-4xl md:text-6xl font-bold py-6 text-center leading-tight">
   Transform PDFs into{" "}
 
   <span className="relative inline-block">
-    <span className="relative z-10 px-1 md:px-2">
+    <MotionSpan variants={spanVariants} className="relative z-10 px-1 md:px-2">
       concise
-    </span>
+    </MotionSpan>
 
     <span
       className="absolute inset-0 bg-rose-200/50 -rotate-2 rounded-lg -skew-y-1"
@@ -34,11 +50,11 @@ export default function HeroSection() {
   </span>{" "}
   
   summaries
-</h1>
-      <h2 className="text-lg sm:text-xl lg:text-2xl text-center px-4 lg:px-0lg:max-w-4xl text-gray-600">
+</MotionH1>
+      <MotionH2 variants={itemVariants} className="text-lg sm:text-xl lg:text-2xl text-center px-4 lg:px-0lg:max-w-4xl text-gray-600">
         Get a beautiful summary reel of document in seconds.
-      </h2>
-      <div>
+      </MotionH2>
+      <MotionDiv variants={itemVariants} whileHover={springHover}>
         <Button
           variant="link"
           className="text-white mt-6 text-base sm:text-lg lg:text-xl rounded-full px-8 sm:px-10 lg:px-12 py-6 sm:py-7 lg:py-8 lg:mt-16 bg-linear-to-r from-slate-900 to-rose-500 hover:from-rose-500 hover:to-slate-900 hover:no-underline font-bold transition-all duration-300 "
@@ -48,7 +64,7 @@ export default function HeroSection() {
             <ArrowRight />
           </Link>
         </Button>
-      </div>
-    </section>
+      </MotionDiv>
+    </MotionSection>
   );
 }

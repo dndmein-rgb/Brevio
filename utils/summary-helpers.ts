@@ -1,29 +1,11 @@
-export const parseSelection = (section: string):{title:string; points:string[]} => {
-  // Split the section into lines
+export const parseSelection = (section: string): { title: string; points: string[] } => {
   const lines = section.split("\n").map(l => l.trim()).filter(Boolean);
-  
 
   const title = lines[0].startsWith("#") ? lines[0].replace(/^#+\s*/, '') : "Section";
-  const points: string[] = [];
-  let currentPoint = '';
 
-  // Process lines starting from index 1 (after the title)
-  lines.slice(1).forEach((line) => {
-    if (line.startsWith('•')) {
-      if (currentPoint) points.push(currentPoint.trim());
-      currentPoint = line;
-    } else if (currentPoint) {
-      currentPoint += ' ' + line;
-    }
-  });
+  const points = lines.slice(1);
 
-  if (currentPoint) points.push(currentPoint.trim());
-
-  return {
-    title,
-    // Final filter to clean up any metadata lines
-    points: points.filter(p => p && !p.startsWith('#') && !p.includes('[Choose'))
-  };
+  return { title, points };
 };
 
 

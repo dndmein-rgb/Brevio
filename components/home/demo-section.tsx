@@ -1,5 +1,31 @@
 import { PizzaIcon } from "lucide-react";
+import SummaryViewer from "../summaries/summary-viewer";
+import { MotionDiv, MotionH3 } from "../common/motion-wrapper";
+ const DEMO_SUMMARY = `# Quick Overview
+Next.js 16 introduces transformative features that bridge the gap between static performance and dynamic flexibility for modern developers.
 
+# Core Technical Updates
+🚀 Server Actions: Deep dive into the useActionState hook for handling form state and server-side transitions natively.
+🛡️ Security Layers: Utilizing the new Taint APIs to prevent sensitive server data from leaking into client-side bundles.
+⚡ Partial Prerendering: Exploring the union of static shells and dynamic islands to optimize Largest Contentful Paint (LCP).
+📦 Caching Logic: Adapting to the new uncached by default standard to ensure data reliability across dynamic routes.
+🏗️ React 19 Hooks: Implementing the use hook for resource loading and handling async transitions without useEffect.
+
+# Performance Metrics
+📉 Bundle Size: Reduced client-side runtime by shifting heavy logic to Server Components by default.
+⏱️ Hydration Speed: Improved error reporting and faster DOM reconciliation using React 19's enhanced engine.
+🌐 Edge Compatibility: Better support for middleware and edge runtimes for global low-latency delivery.
+
+# Developer Experience
+🛠️ Dev Tools: New overlay for hydration mismatch debugging.
+📊 Instrumentation: Improved support for OpenTelemetry.
+🧪 Testing: Native support for Async Request APIs.
+
+# Bottom Line
+💫 Master Next.js 16 to build fast, scalable, and SEO-friendly web applications with the latest React features. The focus remains on shipping less JavaScript while maintaining power.
+
+# Final Thoughts
+🔥 This evolution represents a cleaning up of the App Router architecture. By simplifying caching and strengthening security, Next.js 16 provides a more predictable foundation for the next generation of web apps. It is a must-learn.`;
 export default function DemoSection() {
   return (
     <section className="relative">
@@ -21,13 +47,14 @@ export default function DemoSection() {
           <PizzaIcon className="w-6 h-6 text-rose-500" />
           </div>
           <div className="text-center mb-16">
-          <h3 className="font-bold text-3xl max-w-2xl mx-auto px-4 sm:px-6">Watch how Brevio transforms <span className="bg-linear-to-r from-rose-500 to-rose-700 bg-clip-text text-transparent">this Next.js course PDF</span>  into an easy-to-read summary!</h3>
+          <MotionH3 initial={{y:20 ,opacity:0}} whileInView={{y:0,opacity:1}} transition={{duration:0.5,delay:0.2}} className="font-bold text-3xl max-w-2xl mx-auto px-4 sm:px-6">Watch how Brevio transforms <span className="bg-linear-to-r from-rose-500 to-rose-700 bg-clip-text text-transparent">this Next.js course PDF</span>  into an easy-to-read summary!</MotionH3>
           </div>
-          <div className="flex justify-center items-center p-2 sm:px-4 lg:px-6">
+          </div>
+          <MotionDiv initial={{opacity:0}} whileInView={{opacity:1}} transition={{duration:0.5}} >
             {/* Summary Viewer */}
-
-          </div>
-        </div>
+              <SummaryViewer summary={DEMO_SUMMARY} />
+          </MotionDiv>
+        
       </div>
     </section>
   );
