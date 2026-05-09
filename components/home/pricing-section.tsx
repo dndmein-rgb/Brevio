@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { pricingPlans } from "@/utils/constants";
 import { ArrowRight, CheckIcon } from "lucide-react";
 import Link from "next/link";
 type PriceType = {
@@ -10,35 +11,7 @@ type PriceType = {
   paymentLink: string;
   priceId: string;
 };
-const plans = [
-  {
-    id: "basic",
-    name: "Basic",
-    price: 9,
-    description: "Perfect for occasional use",
-    items: [
-      "5 PDF summaries per month",
-      "Standard processing speed",
-      "Email Support",
-    ],
-    paymentLink: "",
-    priceId: "",
-  },
-  {
-    id: "pro",
-    name: "Pro",
-    price: 19,
-    description: "For professional and teams",
-    items: [
-      "Unlimited PDF summaries",
-      "Priority Purchasing",
-      "24/7 priority supprot",
-      "Markdown expert",
-    ],
-    paymentLink: "",
-    priceId: "",
-  },
-];
+
 const PricingCard = ({
   name,
   price,
@@ -83,8 +56,11 @@ const PricingCard = ({
         <div className="space-y-2 flex justify-center w-full">
           <Link
             href={paymentLink}
-            className={cn("w-full rounded-full flex items-center justify-center gap-2 bg-linear-to-r from-rose-800 to-rose-500 hover:from-rose-500 hover:to-rose-800 text-white border-2 py-2",
-                id==="pro"?"border-rose-900":"border-rose-100 from-rose-400 to-rose-500"
+            className={cn(
+              "w-full rounded-full flex items-center justify-center gap-2 bg-linear-to-r from-rose-800 to-rose-500 hover:from-rose-500 hover:to-rose-800 text-white border-2 py-2",
+              id === "pro"
+                ? "border-rose-900"
+                : "border-rose-100 from-rose-400 to-rose-500",
             )}
           >
             Buy Now <ArrowRight size={18} />
@@ -97,16 +73,18 @@ const PricingCard = ({
 export default function PricingSection() {
   return (
     <section className="relative overflow-hidden" id="pricing">
-    <div className="py-12 lg:py-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 lg:pt-21">
-      <div className="flex items-center justify-center w-full">
-        <h2 className="uppercase font-bold text-xl mb-8 text-rose-500">Pricing</h2>
+      <div className="py-12 lg:py-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 lg:pt-21">
+        <div className="flex items-center justify-center w-full">
+          <h2 className="uppercase font-bold text-xl mb-8 text-rose-500">
+            Pricing
+          </h2>
+        </div>
+        <div className="relative flex justify-center flex-col lg:flex-row items-center lg:items-stretch gap-8">
+          {pricingPlans.map((plan) => (
+            <PricingCard key={plan.id} {...plan} />
+          ))}
+        </div>
       </div>
-      <div className="relative flex justify-center flex-col lg:flex-row items-center lg:items-stretch gap-8">
-        {plans.map((plan) => (
-          <PricingCard key={plan.id} {...plan} />
-        ))}
-      </div>
-    </div>
     </section>
   );
 }
