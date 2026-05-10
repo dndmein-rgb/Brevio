@@ -26,17 +26,22 @@ export default function UploadForm() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { startUpload, routeConfig } = useUploadThing("pdfUploader", {
-    onClientUploadComplete: () => {
-      console.log("uploaded successfully!");
+    onClientUploadComplete: (res) => {
+      console.log("✓ Upload completed successfully!", res);
+      setIsLoading(false);
     },
     onUploadError: (err) => {
-      console.error("Upload error:", err);
+      console.error("✗ Upload error:", err);
       toast.error("Error occurred while uploading", {
         description: err.message || "Please try again",
       });
+      setIsLoading(false);
     },
     onUploadBegin: (fileName: string) => {
-      console.log("Upload has begun for", fileName);
+      console.log("→ Upload has begun for", fileName);
+    },
+    onUploadProgress: (progress) => {
+      console.log(`↑ Upload progress: ${progress}%`);
     },
   });
 
@@ -63,10 +68,15 @@ export default function UploadForm() {
       });
 
       //upload the file to uploadthing
+      console.log("Starting upload for file:", file.name, "Size:", file.size);
+      
       const resp = await startUpload([file]);
-      if (!resp) {
+      
+      console.log("Upload response:", resp);
+      
+      if (!resp || resp.length === 0) {
         toast.error("Something went wrong", {
-          description: "Please use a different file",
+          description: "Upload completed but no response received. Please try again.",
         });
         setIsLoading(false);
         return;
