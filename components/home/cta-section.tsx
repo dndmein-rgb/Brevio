@@ -25,7 +25,7 @@ export default function CTASection() {
               variant={'outline'} 
               className='w-full min-[400px]:w-auto bg-linear-to-r from-slate-900 to-rose-500 hover:from-rose-500 hover:to-slate-900 hover:text-white text-white border-none '
             >
-              <Link href="#pricing">
+              <Link href="/#pricing">
                 Get Started
                 <ArrowRight className="ml-2 h-4 w-4 animate-pulse" />
               </Link>

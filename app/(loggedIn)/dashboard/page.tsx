@@ -85,7 +85,7 @@ export default async function DashboardPage() {
                   plan.
                   <Link
                     className="text-rose-800 underline font-medium underline-offset-4 inline-flex items-center"
-                    href="#pricing"
+                    href="/#pricing"
                   >
                     Click here to upgrade to Pro{" "}
                     <ArrowRight className="h-4 w-4 inline-block" />
