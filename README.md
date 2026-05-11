@@ -167,6 +167,4 @@ Billing is handled entirely through Stripe. Webhooks update user access levels i
 
 
 
-<div align="center">
-  Made with ☕ and Claude · <a href="https://brevio-alpha.vercel.app">brevio-alpha.vercel.app</a>
-</div>
+
