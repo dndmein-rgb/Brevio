@@ -19,11 +19,11 @@ const EmojiPoint = ({ point, index }: { point: string; index: number }) => {
   const { emoji, text } = parseEmojiPoint(point) ?? {};
 
   return (
-    <MotionDiv variants={itemVariants} className="group relative bg-linear-to-br from-gray-200/[0.08] to-gray-400/[0.03] p-4 rounded-2xl border border-gray-500/10 hover:shadow-lg transition-all">
-      <div className="absolute inset-0 bg-linear-to-r from-gray-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
-      <div className="relative flex items-start gap-3">
-        <span className="text-base shrink-0 pt-0.5">{emoji}</span>
-        <p className="text-sm lg:text-base text-muted-foreground/90 leading-relaxed">
+    <MotionDiv variants={itemVariants} className="group relative bg-linear-to-br from-gray-200/[0.08] to-gray-400/[0.03] p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-gray-500/10 hover:shadow-lg transition-all">
+      <div className="absolute inset-0 bg-linear-to-r from-gray-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-xl sm:rounded-2xl" />
+      <div className="relative flex items-start gap-2 sm:gap-3">
+        <span className="text-base sm:text-lg shrink-0 pt-0.5">{emoji}</span>
+        <p className="text-xs sm:text-sm lg:text-base text-muted-foreground/90 leading-relaxed">
           {parseBold(text ?? "")}
         </p>
       </div>
@@ -33,9 +33,9 @@ const EmojiPoint = ({ point, index }: { point: string; index: number }) => {
 
 const RegularPoint = ({ point, index }: { point: string; index: number }) => {
   return (
-    <MotionDiv  variants={itemVariants} className="group relative bg-linear-to-br from-gray-200/[0.08] to-gray-400/[0.03] p-4 rounded-2xl border border-gray-500/10 hover:shadow-lg transition-all">
-      <div className="absolute inset-0 bg-linear-to-r from-gray-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
-      <p className="relative text-sm lg:text-base text-muted-foreground/90 leading-relaxed text-left">
+    <MotionDiv  variants={itemVariants} className="group relative bg-linear-to-br from-gray-200/[0.08] to-gray-400/[0.03] p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-gray-500/10 hover:shadow-lg transition-all">
+      <div className="absolute inset-0 bg-linear-to-r from-gray-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-xl sm:rounded-2xl" />
+      <p className="relative text-xs sm:text-sm lg:text-base text-muted-foreground/90 leading-relaxed text-left">
         {parseBold(point.replace(/^•\s*/, ""))}
       </p>
     </MotionDiv>

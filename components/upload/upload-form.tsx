@@ -28,12 +28,13 @@ export default function UploadForm() {
   const { startUpload, routeConfig } = useUploadThing("pdfUploader", {
     onClientUploadComplete: (res) => {
       console.log("✓ Upload completed successfully!", res);
-      setIsLoading(false);
+      // Don't set loading to false here - let handleSubmit manage it
+      // The PDF processing still needs to happen
     },
     onUploadError: (err) => {
       console.error("✗ Upload error:", err);
       toast.error("Error occurred while uploading", {
-        description: err.message || "Please try again",
+        description: err.data?.toLocaleString() || "Please try again",
       });
       setIsLoading(false);
     },
@@ -136,13 +137,13 @@ export default function UploadForm() {
     }
   };
   return (
-    <div className="flex flex-col w-full gap-8 max-w-2xl mx-auto">
+    <div className="flex flex-col w-full gap-6 md:gap-8 max-w-2xl mx-auto px-4 sm:px-6">
       <div className="relative">
         <div className="absolute inset-0 flex items-center" aria-hidden="true">
           <div className="w-full border-t border-gray-200 dark:border-gray-800" />
         </div>
         <div className="relative flex justify-center">
-          <span className="bg-background px-3 text-muted-foreground text-sm">
+          <span className="bg-background px-3 text-muted-foreground text-xs sm:text-sm">
             Upload PDF
           </span>
         </div>
@@ -163,7 +164,7 @@ export default function UploadForm() {
             </div>
 
             <div className="relative flex justify-center">
-              <span className="bg-background px-3 text-muted-foreground text-sm flex items-center gap-2">
+              <span className="bg-background px-3 text-muted-foreground text-xs sm:text-sm flex items-center gap-2">
                 {/* Decorative pulse dot */}
                 <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
                 Processing

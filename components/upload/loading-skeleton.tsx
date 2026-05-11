@@ -4,10 +4,10 @@ import { cn } from '@/lib/utils';
 
 export default function LoadingSkeleton() {
   return (
-    <Card className="relative px-2 h-[700px] w-[600px] max-w-lg mx-auto overflow-hidden bg-linear-to-br from-background via-background/95 to-rose-500/5 backdrop-blur-lg shadow-2xl rounded-3xl border border-rose-500/10">
+    <Card className="relative px-2 h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] w-full max-w-2xl lg:max-w-lg mx-auto overflow-hidden bg-linear-to-br from-background via-background/95 to-rose-500/5 backdrop-blur-lg shadow-2xl rounded-3xl border border-rose-500/10">
       {/* Loading Progress Bar */}
       <div className="absolute top-0 left-0 right-0 z-20 bg-background/80 backdrop-blur-xs pt-4 pb-2 border-b border-rose-500/10">
-        <div className="px-4 flex gap-1.5">
+        <div className="px-2 sm:px-4 flex gap-1.5">
           {[1, 2, 3].map((_, index) => (
             <div
               key={index}
@@ -25,11 +25,11 @@ export default function LoadingSkeleton() {
       </div>
 
       {/* Loading Content */}
-      <div className="h-full overflow-y-auto scrollbar-hide pt-16 pb-24">
-        <div className="px-6">
+      <div className="h-full overflow-y-auto scrollbar-hide pt-12 sm:pt-16 pb-20 sm:pb-24">
+        <div className="px-3 sm:px-6">
           {/* Loading Title */}
           <div className="flex flex-col gap-2 mb-6 sticky top-0 pt-2 pb-4 bg-background/80 backdrop-blur-xs z-10">
-            <Skeleton className="h-12 w-3/4 mx-auto bg-rose-500/10" />
+            <Skeleton className="h-10 sm:h-12 w-3/4 mx-auto bg-rose-500/10" />
           </div>
 
           {/* Loading Points */}
@@ -70,18 +70,18 @@ export default function LoadingSkeleton() {
       </div>
 
       {/* Loading Navigation */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 bg-background/80 backdrop-blur-xs border-t border-rose-500/10">
-        <div className="flex justify-between items-center">
-          <Skeleton className="rounded-full w-12 h-12 bg-linear-to-br from-rose-500/50 to-rose-600/50" />
-          <div className="flex gap-2">
+      <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 bg-background/80 backdrop-blur-xs border-t border-rose-500/10">
+        <div className="flex justify-between items-center gap-2">
+          <Skeleton className="rounded-full w-10 h-10 sm:w-12 sm:h-12 bg-linear-to-br from-rose-500/50 to-rose-600/50" />
+          <div className="flex gap-1.5 sm:gap-2">
             {[1, 2, 3].map((_, index) => (
               <Skeleton
                 key={index}
-                className="h-2 w-2 rounded-full bg-rose-500/20"
+                className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-rose-500/20"
               />
             ))}
           </div>
-          <Skeleton className="rounded-full w-12 h-12 bg-linear-to-br from-rose-500/50 to-rose-600/50" />
+          <Skeleton className="rounded-full w-10 h-10 sm:w-12 sm:h-12 bg-linear-to-br from-rose-500/50 to-rose-600/50" />
         </div>
       </div>
     </Card>

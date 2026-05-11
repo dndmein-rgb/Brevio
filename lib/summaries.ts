@@ -1,20 +1,21 @@
-import { getDbConnection } from './db';
+import { getDbConnection } from "./db";
 
 export async function getSummaries(userId: string) {
   const sql = await getDbConnection();
-  const summaries =
-    await sql`SELECT * from pdf_summaries where user_id = ${userId} ORDER BY created_at DESC`;
+  const summaries = await sql`SELECT * from pdf_summaries 
+    where user_id = ${userId} 
+    ORDER BY created_at DESC`;
 
   return summaries;
 }
 
 export async function getSummaryById(id: string) {
   try {
-  const sql = await getDbConnection();
+    const sql = await getDbConnection();
 
-  // Use parameterized inputs (?) or the library's specific escaping syntax
-  // to prevent SQL Injection.
-  const [summary] = await sql`
+    // Use parameterized inputs (?) or the library's specific escaping syntax
+    // to prevent SQL Injection.
+    const [summary] = await sql`
     SELECT 
       id, 
       user_id, 
@@ -33,10 +34,9 @@ export async function getSummaryById(id: string) {
     WHERE id = ${id} 
     ORDER BY created_at DESC`;
 
-  return summary;
-
+    return summary;
   } catch (err) {
-    console.error('Error fetching summary by id', err);
+    console.error("Error fetching summary by id", err);
     return null;
   }
 }
@@ -50,10 +50,9 @@ export async function getUserUploadCount(userId: string) {
       WHERE user_id = ${userId}
     `;
 
-    return result?.count||0;
+    return result?.count || 0;
   } catch (err) {
-    console.error('Error fetching user upload count', err);
+    console.error("Error fetching user upload count", err);
     return 0;
   }
 }
-
